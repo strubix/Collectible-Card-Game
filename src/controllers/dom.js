@@ -3,59 +3,58 @@ import EventManager from '../eventManager';
 
 class Dom extends EventManager {
 
-    constructor(selector, parent = null) {
-        super();
+  constructor(selector, parent = null) {
+    super();
 
-        this.$dom = $(selector);
-        this.parent = parent;
+    this.$dom = $(selector);
+    this.parent = parent;
 
-        if (parent) {
-            var p = parent;
-            while (p.parent !== null) {
-                p = p.parent;
-            }
-            this.root = p;
-        } else {
-            this.root = this;    
-        }
-
-        this.mState;
-
-        this.side = "";
-
+    if (parent) {
+      var p = parent;
+      while (p.parent !== null) {
+        p = p.parent;
+      }
+      this.root = p;
+    } else {
+      this.root = this;
     }
 
-    getSide () {
-        if (this.side === "") {
-            return this.parent.getSide();
-        } else {
-            return this.side;
-        }
-    }
+    this.mState;
 
-    setState (state) {
-        this.mState = state;
-    }
+    this.side = this.$dom.offset().top === 0 ? "up" : "down";
+  }
 
-    getState () {
-        return this.mState;
+  getSide() {
+    if (this.side === "") {
+      return this.parent.getSide();
+    } else {
+      return this.side;
     }
+  }
 
-    setParent (parent) {
-        this.parent = parent;
-    }
+  setState(state) {
+    this.mState = state;
+  }
 
-    getParent () {
-        return this.parent;
-    }
+  getState() {
+    return this.mState;
+  }
 
-    setDom (selector) {
-        this.$dom = $(selector);
-    }
+  setParent(parent) {
+    this.parent = parent;
+  }
 
-    getDom () {
-        return this.$dom;
-    }
+  getParent() {
+    return this.parent;
+  }
+
+  setDom(selector) {
+    this.$dom = $(selector);
+  }
+
+  getDom() {
+    return this.$dom;
+  }
 }
 
 export default Dom;
