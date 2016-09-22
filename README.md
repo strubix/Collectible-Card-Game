@@ -18,6 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 npm install && npm run gulp
 ```
+Files would be compiled in public folder.
 
 ## Running the tests
 
@@ -34,4 +35,4 @@ npm run test
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
