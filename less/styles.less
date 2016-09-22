@@ -1,0 +1,257 @@
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-image: url('../img/background.jpg');
+}
+
+.side {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+
+    &.player {
+        top: 50%
+    }
+
+    perspective: 1000px;
+}
+
+.deck {
+    position: absolute;
+    width: 100px;
+    height: 140px;
+
+    background-image: url('../img/card-back.png');
+
+    z-index: 1;
+
+    &.empty {
+        background-image: none;
+        border: 1px solid;
+        border-radius: 5px;
+    }
+}
+
+.hand-area {
+    width: 100%;
+    height: 80px;
+    background-image: url('../img/background-wood.png');
+    background-size: cover;
+    position: absolute;
+
+    .end-turn {
+        height: 75px;
+        width: 200px;
+        margin-left: 80%;
+        background-image: url('../img/btn-background-wood.png');
+        background-size: 100% 100%;
+    }
+}
+
+.cemetary {
+    position: absolute;
+    width: 100px;
+    height: 140px;
+
+    border: 1px solid;
+
+    z-index: 10;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 20px;
+        background-color: black;
+        position: absolute;
+        left: 25.5px;
+        top: 55px;        
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        width: 20px;
+        height: 70px;
+        background-color: black;
+        position: absolute;
+        left: 40px;
+        top: 30px;        
+    }
+
+}
+
+@keyframes shake-flipped {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0) rotateY(180deg);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0) rotateY(180deg);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0) rotateY(180deg);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0) rotateY(180deg);
+  }
+}
+
+.card {
+    position: absolute;
+    width: 100px;
+    height: 140px;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;    
+
+    z-index: 2;
+
+    &.draw {
+        transition-property: top,left,transform;
+        transition-duration: 1s;
+    }
+
+    &.flip {
+        transform: rotateY(180deg);
+    }
+
+    &.hand {
+        transition-duration: 0.2s;
+    }
+
+    &.play {
+        left: 50% !important; 
+        top: 30% !important; 
+        transform: translateZ(300px) rotateY(180deg); 
+        z-index: 5;
+    }
+
+    &.board {
+        // transition-duration: 1s;
+        transition-timing-function: ease-in;
+    }
+
+    &.flip.hit {
+        animation: shake-flipped 0.82s cubic-bezier(.36,.07,.19,.97);
+    }
+
+    &.active {
+        box-shadow: 0px 0px 100px #f00;
+    }
+
+    &.target {
+        box-shadow: 0px 0px 100px #00f;
+    }
+
+    &.attack {
+        transition-delay: 0.5s;
+        transform: rotateY(180deg) rotateZ(20deg);
+        z-index: 10;
+    }
+
+    div {
+        
+        background-size: 100%;
+        height: 140px;
+        width: 100px;
+        
+        top: 0;
+        left: 0;
+        position: absolute;
+
+        backface-visibility: hidden;
+
+        &.card-back {
+            background-color: lighten(green, 20%);
+            z-index: 4;
+            background-image: url('../img/card-back.png');
+        }
+
+        &.card-front {
+            background-color: lighten(red, 20%);
+            transform: rotateY(180deg);
+        }
+
+        &.card-1 {
+            background-image: url('../img/card-1.png');
+        }
+
+        &.card-2 {
+            background-image: url('../img/card-2.png');
+        }
+
+    }
+
+}
+
+.player {
+
+    .deck {
+        top: 45%;
+        right: 5%;
+    }
+
+    .hand-area {
+        bottom: 0;
+
+        .shield {
+            display: block;
+            width: 150px;
+            height: 180px;
+
+            background-image: url('../img/shield.png');
+            background-size: cover;
+
+            position: absolute;
+            top: -110px;
+            left: 5%;
+        }
+    }
+
+    .cemetary {
+        top: 10%;
+        right: 5%;
+    }
+}
+
+
+.opponent {
+
+    .hand-area {
+        .shield {
+            display: block;
+            width: 150px;
+            height: 180px;
+
+            transform: rotateZ(180deg);
+
+            background-image: url('../img/shield.png');
+            background-size: cover;
+
+            position: absolute;
+            top: 10px;
+            right: 5%;
+        }
+    }
+
+    .deck {
+        top: 23%;
+        left: 5%;
+    }
+
+    .cemetary {
+        top: 58%;
+        left: 5%;
+    }
+}
