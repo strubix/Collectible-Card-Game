@@ -16,7 +16,13 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing
 
 ```
-npm install && npm run gulp
+npm install
+```
+
+### Compiling
+
+```
+npm run gulp
 ```
 Files would be compiled in public folder.
 
@@ -35,4 +41,4 @@ npm run test
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
