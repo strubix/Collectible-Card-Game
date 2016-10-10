@@ -8,84 +8,74 @@ var secondClick = false;
 
 export default class ArenaController extends Controller {
 
-  constructor() {
-    super('body');
+    constructor () {
+        super('body');
 
-    this.up = new SideController(".side.opponent", this);
-    this.down = new SideController(".side.player", this);
+        this.up = new SideController(".side.opponent", this);
+        this.down = new SideController(".side.player", this);
 
-    this.game = ModelFactory.get('game', {
-      'up': ModelFactory.get('player', { type: 'computer' }),
-      'down': ModelFactory.get('player', { type: 'human' })
-    });
+        this.game = ModelFactory.get('game', {'up'  : ModelFactory.get('player', {type: 'computer'}),
+                                              'down': ModelFactory.get('player', {type: 'human'}) });
 
-    this.on('clickDeck', this.onClickDeck.bind(this));
-    this.on('clickHand', this.onClickHand.bind(this));
-    this.on('clickBoard', this.onClickBoard.bind(this));
-    this.on('targetHand', this.onTargetHand.bind(this));
-    this.on('clickEndTurn', this.onClickEndTurn.bind(this));
-  }
-
-  onClickDeck(deck) {
-    console.log('arena.js', deck);
-    var s = deck.getSide();
-
-    var self = this;
-    var cardState = this.game[s].draw();
-
-    cardState.getSide = function() {
-      return s;
-    };
-    self.trigger('drawCard', cardState);
-
-    if (self.game[s].deck.getCardsCount() === 0) {
-      self.trigger('emptyDeck');
+        this.on('clickDeck', this.onClickDeck.bind(this));
+        this.on('clickHand', this.onClickHand.bind(this));
+        this.on('clickBoard', this.onClickBoard.bind(this));
+        this.on('targetHand', this.onTargetHand.bind(this));
+        this.on('clickEndTurn', this.onClickEndTurn.bind(this));
     }
-  }
 
+    onClickDeck (deck) {
+        var s = deck.getSide();
 
-  onClickHand(card) {
-    // api call then
-    this.trigger('playCard', card);
-  }
+        var self = this;
+        var cardState = this.game[s].draw();
 
-  onClickBoard(card) {
-    var self = this;
-    if (!secondClick) {
-      this.trigger('activateCard', card);
-      secondClick = true;
-    } else {
-      this.trigger('targetCard', card);
+        cardState.getSide = function () {
+            return s;
+        };
+        self.trigger('drawCard', cardState);
 
-      setTimeout(function() {
-        self.trigger('discardCard', card);
-      }, 4000);
-      secondClick = false;
+        if (self.game[s].deck.getCardsCount() === 0) {
+            self.trigger('emptyDeck');
+        }              
     }
-  }
 
-  onTargetHand(hand) {
-    if (secondClick) {
-      this.trigger('attackHand', hand);
+
+    onClickHand (card) {
+        // api call then
+        this.trigger('playCard', card);
     }
-  }
 
-  onClickEndTurn() {
-    var self = this;
-    this.trigger('endTurn', {
-      getSide: () => {
-        return 'down'
-      }
-    });
-    console.log('end turn');
+    onClickBoard (card) {
+        var self = this;
+        if (!secondClick) {
+            this.trigger('activateCard', card);
+            secondClick = true;
+        } else {
+            this.trigger('targetCard', card);
 
-    setTimeout(function() {
-      self.trigger('yourTurn', {
-        getSide: () => {
-          return 'down'
+            setTimeout(function () {
+                self.trigger('discardCard', card);
+            }, 4000);
+            secondClick = false;
         }
-      });
-      console.log('your turn');
-    }, 5000);
-  }
+    }
+
+    onTargetHand (hand) {
+        if (secondClick) {
+            this.trigger('attackHand', hand);
+        }
+    }
+
+    onClickEndTurn () {
+        var self = this;
+        this.trigger('endTurn', { getSide: () => { return 'down'} });
+        console.log('end turn');
+
+        setTimeout(function () {
+            self.trigger('yourTurn', { getSide: () => { return 'down'} });
+            console.log('your turn');
+        }, 5000);
+    }
+
 }

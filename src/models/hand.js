@@ -16,12 +16,7 @@ class Hand {
   }
 
   removeCard(card) {
-    if (card <= this.cards.length - 1) {
-      this.cards.splice(card, 1);
-      return true;
-    } else {
-      return false;
-    }
+    return this.cards.splice(card, 1);
   }
 
   getAllCards() {

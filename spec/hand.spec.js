@@ -4,14 +4,17 @@ import Card from '../src/models/card';
 describe('Hand', function() {
 
   describe('constructor()', function() {
+
     it("Accepte un objet en premier argument", function() {
       expect(new Hand('foo').constructor).toThrow();
     });
+
     it("Cet objet doit contenir un tableau cards", function() {
       let test = new Hand({ "cards": [new Card(4, 2, 3, 'card-1'), new Card(6, 2, 1, 'card-2')] });
       expect(test.cards).toBeDefined();
       expect(test.limit).toBe(7);
     });
+
     it("Cet objet doit contenir un index limit", function() {
       let test = new Hand({ "cards": [new Card(4, 2, 3, 'card-1'), new Card(6, 2, 1, 'card-2')], limit: 10 });
       expect(test.cards).toBeDefined();

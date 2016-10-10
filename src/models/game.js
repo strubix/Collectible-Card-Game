@@ -16,11 +16,8 @@ class Game extends EventManager {
     return this.getTurn() === 'up' ? this.turn = 'down' : this.turn = 'up';
   }
 
-  proxy(side, action, payload = false) {
-    if(payload !== false){
-      return side[action](payload);
-    }
-    return side[action]();
+  proxy(side, action, payload) {
+      return this[side][action](payload);
   }
 }
 export default Game;

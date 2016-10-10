@@ -6,7 +6,7 @@ class Deck {
   }
 
   draw() {
-    return this.cards[0];
+    return this.cards.splice(0, 1)[0];
   }
 
   shuffle() {

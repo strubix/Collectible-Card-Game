@@ -12,50 +12,26 @@ export default class Player extends Pawn {
   }
 
   shuffle(cards) {
-    if (cards === 'deck') {
-      if (Object.keys(this.deck.cards).length > 0) {
-        this.deck.shuffle();
-        return true;
-      }
-      return false;
-    } else if (cards === 'cemetary') {
-      if (Object.keys(this.cemetary.cards).length > 0) {
-        this.cemetary.shuffle();
-        return true;
-      }
-      return false;
-    }
-    return false;
+    this[cards].shuffle();
+    return true;
   }
 
   draw() {
-    if (this.deck.cards.length > 0) {
-      let salut = this.deck.draw();
-      this.hand.cards.push(salut);
-      return salut;
-
-    }
-    return false;
+    return this.deck.draw();
   }
 
   playCard(position) {
-    if (typeof position === 'number'
-        && this.hand.cards.length > 0) {
-      this.board.cards.push(this.hand.cards[position]);
-      this.hand.cards.splice(position, 1);
-      return true;
+    let card = this.hand.removeCard(position);
+    if (card !== false) {
+      this.board.addCard(card);
     }
-    return false;
   }
 
   discard(position) {
-    if (typeof position === 'number'
-        && this.hand.cards.length > 0) {
-      this.cemetary.cards.push(this.hand.cards[position]);
-      this.hand.cards.splice(position, 1);
-      return true;
+    let card = this.hand.removeCard(position);
+    if (card !== false) {
+      this.cemetary.addCard(card);
     }
-    return false;
   }
 
   attack(position, target) {

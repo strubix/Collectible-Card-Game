@@ -9,10 +9,12 @@ describe('Deck', function() {
     });
     it("Cet objet doit contenir un tableau cards", function() {
       expect(new Deck({
-        "cards": [
-          new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }),
-          new Card({ life: 6, strength: 2, def: 1, face: 'card-2' })
-        ]
+        "cards": [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({
+          life: 6,
+          strength: 2,
+          def: 1,
+          face: 'card-2'
+        })]
       }).cards).toBeDefined();
     });
   });
@@ -20,10 +22,12 @@ describe('Deck', function() {
   describe('draw()', function() {
     beforeEach(function() {
       this.test = new Deck({
-        "cards": [
-          new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }),
-          new Card({ life: 6, strength: 2, def: 1, face: 'card-2' })
-        ]
+        "cards": [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({
+          life: 6,
+          strength: 2,
+          def: 1,
+          face: 'card-2'
+        })]
       });
     });
     it("Doit retourner la première carte du paquet", function() {
@@ -50,13 +54,7 @@ describe('Deck', function() {
           face: 'card-4'
         })]
       });
-      test.shuffle();
-      test.shuffle();
-      test.shuffle();
-      test.shuffle();
-      test.shuffle();
-      expect(test.cards).toBeDefined();
-      expect(test.cards).not.toEqual([new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({
+      var testCards = [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({
         life: 4,
         strength: 2,
         def: 3,
@@ -66,17 +64,30 @@ describe('Deck', function() {
         strength: 2,
         def: 3,
         face: 'card-4'
-      })]);
+      })];
+
+      testCards = [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' })];
+      test.cards = [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' })];
+      var count = 0;
+      while (test.cards === testCards || count < (1000 * 1000)) {
+        test.shuffle();
+        count++;
+      }
+      expect(count).not.toEqual(1000 * 1000);
+
+      expect(test.cards).toBeDefined();
     });
   });
 
   describe('insertAt()', function() {
     beforeEach(function() {
       this.test = new Deck({
-        "cards": [
-          new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }),
-          new Card({ life: 4, strength: 2, def: 3, face: 'card-3' })
-        ]
+        "cards": [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({
+          life: 4,
+          strength: 2,
+          def: 3,
+          face: 'card-3'
+        })]
       });
     });
     it("Prend deux paramètres", function() {
@@ -85,22 +96,25 @@ describe('Deck', function() {
     });
     it("Ajoute une carte dans le paquet", function() {
       this.test.insertAt(new Card({ life: 4, strength: 2, def: 3, face: 'card-2' }), 1);
-      expect(this.test.cards).toEqual([
-        new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }),
-        new Card({ life: 4, strength: 2, def: 3, face: 'card-2' }),
-        new Card({ life: 4, strength: 2, def: 3, face: 'card-3' })
-      ]);
+      expect(this.test.cards).toEqual([new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({
+        life: 4,
+        strength: 2,
+        def: 3,
+        face: 'card-2'
+      }), new Card({ life: 4, strength: 2, def: 3, face: 'card-3' })]);
     });
   });
 
   describe('getCardsCount()', function() {
     it("Retourne le nombre de carte actuellement dans le deck", function() {
       const test = new Deck({
-        "cards": [
-          new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }),
-          new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }),
-          new Card({ life: 4, strength: 2, def: 3, face: 'card-1' })
-        ]});
+        "cards": [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({
+          life: 4,
+          strength: 2,
+          def: 3,
+          face: 'card-1'
+        }), new Card({ life: 4, strength: 2, def: 3, face: 'card-1' })]
+      });
       expect(test.getCardsCount()).toEqual(3);
     });
   });

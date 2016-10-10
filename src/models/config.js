@@ -13,7 +13,7 @@ export default {
   },
   deck: {
     class: DeckModel,
-    param: {cards : [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({ life: 6, strength: 2, def: 1, face: 'card-2' })]}
+    param: {cards : [new Card({ life: 4, strength: 2, def: 3, face: 'card-1' }), new Card({ life: 6, strength: 2, def: 1, face: 'card-2' }), new Card({ life: 6, strength: 2, def: 1, face: 'card-2' })]}
   },
   player: {
     class: PlayerModel,
